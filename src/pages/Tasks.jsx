@@ -1,11 +1,14 @@
 import { BellIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import MyTasks from "../components/tasks/MyTasks";
 import TaskCard from "../components/tasks/TaskCard";
-import Modal from "../components/ui/Modal";
 import { useState } from "react";
+import AddModalTask from "../components/tasks/AddModalTask";
+import { useSelector } from "react-redux";
 
 const Tasks = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const tasks = useSelector((state) => state.tasks.task);
+  console.log(tasks);
   return (
     <div className="h-screen grid grid-cols-12">
       <div className="col-span-9 px-10 pt-10">
@@ -26,9 +29,7 @@ const Tasks = () => {
             >
               Add Task
             </button>
-            <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Programming Hero">
-              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore, dolorem esse ipsa blanditiis impedit itaque, aliquid voluptate accusamus obcaecati explicabo, at rerum tempore quos commodi quisquam qui fuga illum! Placeat aspernatur ipsa aut reiciendis eum debitis neque, quibusdam ex consectetur adipisci delectus quis cumque labore necessitatibus eligendi veniam animi dolor.</p>
-            </Modal>
+            <AddModalTask isOpen={isOpen} setIsOpen={setIsOpen} />
             <div className="h-10 w-10 rounded-xl overflow-hidden">
               <img
                 src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=644&q=80"
@@ -39,7 +40,7 @@ const Tasks = () => {
           </div>
         </div>
         <div className="grid grid-cols-3 gap-5 mt-10">
-          <div className="relative h-[800px] overflow-auto">
+          <div className="relative overflow-auto">
             <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
               <h1>Up Next</h1>
               <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
@@ -47,10 +48,12 @@ const Tasks = () => {
               </p>
             </div>
             <div className="space-y-3">
-              <TaskCard />
+              {tasks.map((task) => (
+                <TaskCard key={task.id} task={task} />
+              ))}
             </div>
           </div>
-          <div className="relative h-[800px] overflow-auto">
+          <div className="relative overflow-auto">
             <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
               <h1>In Progress</h1>
               <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
@@ -58,19 +61,22 @@ const Tasks = () => {
               </p>
             </div>
             <div className="space-y-3">
-              <TaskCard />
-              <TaskCard />
+              {tasks.map((task) => (
+                <TaskCard key={task.id} task={task} />
+              ))}
             </div>
           </div>
-          <div className="relative h-[800px] overflow-auto">
+          <div className="relative overflow-auto">
             <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
-              <h1>Up Next</h1>
+              <h1>Complete</h1>
               <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
                 0
               </p>
             </div>
             <div className="space-y-3">
-              <TaskCard />
+              {tasks.map((task) => (
+                <TaskCard key={task.id} task={task} />
+              ))}
             </div>
           </div>
         </div>
