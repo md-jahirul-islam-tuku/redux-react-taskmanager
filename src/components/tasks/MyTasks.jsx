@@ -11,8 +11,8 @@ import Modal from "../ui/Modal";
 import { useState } from "react";
 
 const MyTasks = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
+
   const user = useSelector((state) => state.users.name);
   const userTasks = useSelector(selectUserTasks(user));
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ const MyTasks = () => {
             </div>
 
             <div className="flex gap-3">
-              <button onClick={() => selectUserTasks(task)} title="Details">
+              <button title="Details" onClick={() => setSelectedTask(task)}>
                 <DocumentMagnifyingGlassIcon className="w-5 h-5 text-primary" />
               </button>
 
@@ -55,12 +55,47 @@ const MyTasks = () => {
           </div>
         ))}
       </div>
-      <Modal
-        isOpen={!!selectedTask}
-        setIsOpen={() => setSelectedTask(null)}
-        title={selectedTask?.title}
-        task={selectedTask}
-      />
+
+      {/* ONE modal only */}
+      <Modal isOpen={!!selectedTask} setIsOpen={() => setSelectedTask(null)}>
+        {selectedTask && (
+          <div className="space-y-2">
+            <h1 className="text-2xl font-bold">{selectedTask.title}</h1>
+            <p>
+              <span className="font-semibold">Description: </span>
+              {selectedTask.description}
+            </p>
+            <p>
+              <span className="font-semibold">Deadline: </span>
+              {selectedTask.deadline}
+            </p>
+            <p>
+              <span className="font-semibold">Assignees: </span>
+              {Array.isArray(selectedTask.assignees)
+                ? selectedTask.assignees.join(", ")
+                : selectedTask.assignees}
+            </p>
+            <p>
+              <span className="font-semibold">Priority: </span>
+              <span
+                className={`capitalize ${
+                  selectedTask.priority === "high"
+                    ? "text-red-500"
+                    : selectedTask.priority === "medium"
+                      ? "text-yellow-500"
+                      : "text-green-500"
+                }`}
+              >
+                {selectedTask.priority}
+              </span>
+            </p>
+            <p>
+              <span className="font-semibold">Status: </span>
+              {selectedTask.status}
+            </p>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 };

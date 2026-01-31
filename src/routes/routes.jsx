@@ -4,6 +4,8 @@ import Tasks from '../pages/Tasks';
 import Chat from '../pages/Chat';
 import Settings from '../pages/Settings';
 import Profile from '../pages/Profile';
+import Posts from '../pages/Posts';
+import PostDetails from '../pages/PostDetails';
 const routes = createBrowserRouter([
   {
     path: '/',
@@ -24,6 +26,14 @@ const routes = createBrowserRouter([
       {
         path: '/profile',
         element: <Profile />,
+      },
+      {
+        path: '/posts',
+        element: <Posts />,
+      },
+      {
+        path: '/posts/:id',
+        element: <PostDetails />,
       },
     ],
   },
