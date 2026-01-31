@@ -19,11 +19,11 @@ const people = [
 const task = {
     id: 1,
     status: 'pending',
-    title: 'Remove Button',
+    title: 'Do the work',
     description:
       'We need a remove button in our task card. Meke the button red and use Heroicon for tashbin icon.',
     deadline: '2023-08-28',
-    assignees: 'Mir Hussain',
+    assignees: 'Eva',
     priority: 'high',
   };
 

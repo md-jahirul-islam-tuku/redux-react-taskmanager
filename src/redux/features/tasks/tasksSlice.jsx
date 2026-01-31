@@ -38,6 +38,13 @@ export const tasksSlice = createSlice({
   },
 });
 
+export const selectUserTasks = (user) => (state) =>
+  state.tasks.task.filter((i) =>
+    Array.isArray(i.assignees)
+      ? i.assignees.includes(user)
+      : i.assignees === user,
+  );
+
 export const { addTasks, removeTask, updatedStatus } = tasksSlice.actions;
 
 export default tasksSlice.reducer;
