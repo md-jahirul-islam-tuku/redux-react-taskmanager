@@ -4,16 +4,6 @@ import { removeTask, updatedStatus } from "../../redux/features/tasks/tasksSlice
 
 const TaskCard = ({ task }) => {
   const dispatch = useDispatch();
-  // const task = {
-  //   id: 1,
-  //   status: 'pending',
-  //   title: 'Remove Button',
-  //   description:
-  //     'We need a remove button in our task card. Meke the button red and use Heroicon for tashbin icon.',
-  //   date: '2023-08-28',
-  //   assignedTo: 'Mir Hussain',
-  //   priority: 'high',
-  // };
 
   return (
     <div className="bg-secondary/10 rounded-md p-5">
@@ -36,7 +26,7 @@ const TaskCard = ({ task }) => {
           </button>
           <button
             onClick={() =>
-              dispatch(updatedStatus({ id: task.id, status: updatedStatus }))
+              dispatch(updatedStatus(task.id))
             }
             title="In progress"
           >

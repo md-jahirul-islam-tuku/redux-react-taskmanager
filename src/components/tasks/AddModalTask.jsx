@@ -16,6 +16,17 @@ const people = [
   "Jack",
 ];
 
+const task = {
+    id: 1,
+    status: 'pending',
+    title: 'Remove Button',
+    description:
+      'We need a remove button in our task card. Meke the button red and use Heroicon for tashbin icon.',
+    deadline: '2023-08-28',
+    assignees: 'Mir Hussain',
+    priority: 'high',
+  };
+
 const AddModalTask = ({ isOpen, setIsOpen }) => {
   const dispatch = useDispatch();
   const {
@@ -33,7 +44,7 @@ const AddModalTask = ({ isOpen, setIsOpen }) => {
 
   const onSubmit = (data) => {
     dispatch(addTasks(data));
-    handleCancel();
+    setIsOpen(false);
   };
 
   return (
@@ -47,6 +58,7 @@ const AddModalTask = ({ isOpen, setIsOpen }) => {
               type="text"
               className="w-full rounded-md"
               placeholder="Task title"
+              defaultValue={task.title}
               {...register("title", { required: "Title is required" })}
             />
             {errors.title && (
@@ -65,6 +77,7 @@ const AddModalTask = ({ isOpen, setIsOpen }) => {
               rows={2}
               className="w-full rounded-md"
               placeholder="Task description"
+              defaultValue={task.description}
               {...register("description")}
             />
           </div>
@@ -75,6 +88,7 @@ const AddModalTask = ({ isOpen, setIsOpen }) => {
             <input
               type="date"
               className="w-full rounded-md"
+              defaultValue={task.deadline}
               {...register("deadline", { required: true })}
             />
           </div>
@@ -85,6 +99,7 @@ const AddModalTask = ({ isOpen, setIsOpen }) => {
             <select
               //   multiple
               className="w-full rounded-md"
+              defaultValue={task.assignees}
               {...register("assignees", { required: true })}
             >
               {people.map((person) => (
@@ -103,6 +118,7 @@ const AddModalTask = ({ isOpen, setIsOpen }) => {
             <label className="block text-sm font-medium mb-1">Priority</label>
             <select
               className="w-full rounded-md"
+              defaultValue={task.priority}
               {...register("priority", { required: true })}
             >
               <option value="">Select priority</option>

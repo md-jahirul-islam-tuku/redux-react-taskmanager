@@ -8,7 +8,9 @@ import { useSelector } from "react-redux";
 const Tasks = () => {
   const [isOpen, setIsOpen] = useState(false);
   const tasks = useSelector((state) => state.tasks.task);
-  console.log(tasks);
+  const pendingTasks = tasks.filter((task) => task.status === "pending");
+  const runningTasks = tasks.filter((task) => task.status === "running");
+  const doneTasks = tasks.filter((task) => task.status === "done");
   return (
     <div className="h-screen grid grid-cols-12">
       <div className="col-span-9 px-10 pt-10">
@@ -44,11 +46,11 @@ const Tasks = () => {
             <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
               <h1>Up Next</h1>
               <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
-                0
+                {pendingTasks.length}
               </p>
             </div>
             <div className="space-y-3">
-              {tasks.map((task) => (
+              {pendingTasks.map((task) => (
                 <TaskCard key={task.id} task={task} />
               ))}
             </div>
@@ -57,11 +59,11 @@ const Tasks = () => {
             <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
               <h1>In Progress</h1>
               <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
-                0
+                {runningTasks.length}
               </p>
             </div>
             <div className="space-y-3">
-              {tasks.map((task) => (
+              {runningTasks.map((task) => (
                 <TaskCard key={task.id} task={task} />
               ))}
             </div>
@@ -70,17 +72,18 @@ const Tasks = () => {
             <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
               <h1>Complete</h1>
               <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
-                0
+                {doneTasks.length}
               </p>
             </div>
             <div className="space-y-3">
-              {tasks.map((task) => (
+              {doneTasks.map((task) => (
                 <TaskCard key={task.id} task={task} />
               ))}
             </div>
           </div>
         </div>
       </div>
+      {/* Sidebar */}
       <div className="col-span-3 border-l-2 border-secondary/20 px-10 pt-10">
         <div>
           <h1 className="text-xl">Members</h1>

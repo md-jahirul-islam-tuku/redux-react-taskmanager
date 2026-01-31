@@ -4,6 +4,12 @@ const initialState = {
   task: [],
 };
 
+const STATUS_FLOW = {
+  pending: "running",
+  running: "done",
+  done: "archive",
+};
+
 export const tasksSlice = createSlice({
   name: "tasks",
   initialState,
@@ -24,8 +30,10 @@ export const tasksSlice = createSlice({
       state.task = state.task.filter((i) => i.id !== payload);
     },
     updatedStatus: (state, { payload }) => {
-      const updated = state.task.find((i) => i.id === payload.id);
-      updated.status = "running";
+      const task = state.task.find((i) => i.id === payload);
+      if (task && STATUS_FLOW[task.status]) {
+        task.status = STATUS_FLOW[task.status];
+      }
     },
   },
 });
