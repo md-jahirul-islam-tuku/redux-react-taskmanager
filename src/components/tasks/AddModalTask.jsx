@@ -5,6 +5,7 @@ import { addTasks } from "../../redux/features/tasks/tasksSlice";
 
 const people = [
   "Alice",
+  "Saad",
   "Bob",
   "Charlie",
   "David",

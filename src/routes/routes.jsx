@@ -1,41 +1,51 @@
-import { createBrowserRouter } from 'react-router-dom';
-import App from '../App';
-import Tasks from '../pages/Tasks';
-import Chat from '../pages/Chat';
-import Settings from '../pages/Settings';
-import Profile from '../pages/Profile';
-import Posts from '../pages/Posts';
-import PostDetails from '../pages/PostDetails';
+import { createBrowserRouter } from "react-router-dom";
+import App from "../App";
+import Tasks from "../pages/Tasks";
+import Chat from "../pages/Chat";
+import Settings from "../pages/Settings";
+import Profile from "../pages/Profile";
+import Posts from "../pages/Posts";
+import PostDetails from "../pages/PostDetails";
+import SignUp from "../pages/authentication/SignUp";
+import PrivateRoute from "./PrivateRoute";
 const routes = createBrowserRouter([
   {
-    path: '/',
-    element: <App />,
+    path: "/",
+    element: (
+      <PrivateRoute>
+        <App />
+      </PrivateRoute>
+    ),
     children: [
       {
         index: true,
         element: <Tasks />,
       },
       {
-        path: '/chat',
+        path: "/chat",
         element: <Chat />,
       },
       {
-        path: '/settings',
+        path: "/settings",
         element: <Settings />,
       },
       {
-        path: '/profile',
+        path: "/profile",
         element: <Profile />,
       },
       {
-        path: '/posts',
+        path: "/posts",
         element: <Posts />,
       },
       {
-        path: '/posts/:id',
+        path: "/posts/:id",
         element: <PostDetails />,
       },
     ],
+  },
+  {
+    path: "/signup",
+    element: <SignUp />,
   },
 ]);
 
