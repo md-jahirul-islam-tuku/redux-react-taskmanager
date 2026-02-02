@@ -3,7 +3,10 @@ import MyTasks from "../components/tasks/MyTasks";
 import TaskCard from "../components/tasks/TaskCard";
 import { useState } from "react";
 import AddModalTask from "../components/tasks/AddModalTask";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase.config";
+import { logout } from "../redux/features/users/usersSlice";
 
 const Tasks = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,6 +14,11 @@ const Tasks = () => {
   const pendingTasks = tasks.filter((task) => task.status === "pending");
   const runningTasks = tasks.filter((task) => task.status === "running");
   const doneTasks = tasks.filter((task) => task.status === "done");
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    signOut(auth);
+    dispatch(logout());
+  };
   return (
     <div className="h-screen grid grid-cols-12">
       <div className="col-span-9 px-10 pt-10">
@@ -24,6 +32,9 @@ const Tasks = () => {
             </button>
             <button className="border-2 border-secondary/20 hover:border-primary hover:bg-primary rounded-xl h-10 w-10 grid place-content-center text-secondary hover:text-white transition-all">
               <BellIcon className="h-6 w-6" />
+            </button>
+            <button onClick={handleLogout} className="btn btn-primary">
+              Logout
             </button>
             <button
               onClick={() => setIsOpen(!isOpen)}

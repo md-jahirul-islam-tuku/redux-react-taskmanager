@@ -8,6 +8,7 @@ import Posts from "../pages/Posts";
 import PostDetails from "../pages/PostDetails";
 import SignUp from "../pages/authentication/SignUp";
 import PrivateRoute from "./PrivateRoute";
+import SignIn from "../pages/authentication/SignIn";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -46,6 +47,10 @@ const routes = createBrowserRouter([
   {
     path: "/signup",
     element: <SignUp />,
+  },
+  {
+    path: "/signin",
+    element: <SignIn />,
   },
 ]);
 
