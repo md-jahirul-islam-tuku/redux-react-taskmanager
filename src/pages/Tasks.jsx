@@ -7,13 +7,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase.config";
 import { logout } from "../redux/features/users/usersSlice";
+import { useGetTasksQuery } from "../redux/features/api/taskApi";
 
 const Tasks = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const tasks = useSelector((state) => state.tasks.task);
-  const pendingTasks = tasks.filter((task) => task.status === "pending");
-  const runningTasks = tasks.filter((task) => task.status === "running");
-  const doneTasks = tasks.filter((task) => task.status === "done");
+  // const tasks = useSelector((state) => state.tasks.task);
+  const { 
+    data: tasks, 
+    // isLoading, 
+    // isError 
+  } = useGetTasksQuery();
+  const pendingTasks = tasks?.filter((task) => task.status === "pending");
+  const runningTasks = tasks?.filter((task) => task.status === "running");
+  const doneTasks = tasks?.filter((task) => task.status === "done");
   const dispatch = useDispatch();
   const handleLogout = () => {
     signOut(auth);
@@ -21,7 +27,7 @@ const Tasks = () => {
   };
   return (
     <div className="h-screen grid grid-cols-12">
-      <div className="col-span-9 px-10 pt-10">
+      <div className="col-span-9 px-10 py-10">
         <div className="flex justify-between items-center">
           <div>
             <h1 className="font-semibold text-3xl">Tasks</h1>
@@ -57,11 +63,11 @@ const Tasks = () => {
             <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
               <h1>Up Next</h1>
               <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
-                {pendingTasks.length}
+                {pendingTasks?.length}
               </p>
             </div>
             <div className="space-y-3">
-              {pendingTasks.map((task) => (
+              {pendingTasks?.map((task) => (
                 <TaskCard key={task.id} task={task} />
               ))}
             </div>
@@ -70,11 +76,11 @@ const Tasks = () => {
             <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
               <h1>In Progress</h1>
               <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
-                {runningTasks.length}
+                {runningTasks?.length}
               </p>
             </div>
             <div className="space-y-3">
-              {runningTasks.map((task) => (
+              {runningTasks?.map((task) => (
                 <TaskCard key={task.id} task={task} />
               ))}
             </div>
@@ -83,11 +89,11 @@ const Tasks = () => {
             <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
               <h1>Complete</h1>
               <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
-                {doneTasks.length}
+                {doneTasks?.length}
               </p>
             </div>
             <div className="space-y-3">
-              {doneTasks.map((task) => (
+              {doneTasks?.map((task) => (
                 <TaskCard key={task.id} task={task} />
               ))}
             </div>

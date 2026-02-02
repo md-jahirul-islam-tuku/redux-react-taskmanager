@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import Modal from "../ui/Modal";
-import { useDispatch } from "react-redux";
-import { addTasks } from "../../redux/features/tasks/tasksSlice";
+import { useSendTaskMutation } from "../../redux/features/api/taskApi";
 
 const people = [
   "Alice",
@@ -18,18 +17,18 @@ const people = [
 ];
 
 const task = {
-    id: 1,
-    status: 'pending',
-    title: 'Do the work',
-    description:
-      'We need a remove button in our task card. Meke the button red and use Heroicon for tashbin icon.',
-    deadline: '2023-08-28',
-    assignees: 'Eva',
-    priority: 'high',
-  };
+  id: 1,
+  title: "Do the work",
+  description:
+    "We need a remove button in our task card. Meke the button red and use Heroicon for tashbin icon.",
+  deadline: "2023-08-28",
+  assignees: "Eva",
+  priority: "high",
+  // status: 'pending',
+};
 
 const AddModalTask = ({ isOpen, setIsOpen }) => {
-  const dispatch = useDispatch();
+  const [setPost, { data }] = useSendTaskMutation();
   const {
     register,
     handleSubmit,
@@ -43,10 +42,11 @@ const AddModalTask = ({ isOpen, setIsOpen }) => {
     console.log("Form cancelled");
   };
 
-  const onSubmit = (data) => {
-    dispatch(addTasks(data));
+  const onSubmit = (payload) => {
+    setPost(payload);
     setIsOpen(false);
   };
+  console.log(data);
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Programming Hero">
